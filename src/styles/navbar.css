@@ -19,6 +19,8 @@
   object-fit: contain;
   transform: rotate(5deg);
   border-radius: 9px;
+  background-color: #222;
+  padding: 6px;
 }
 
 .brand-text {
