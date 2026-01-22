@@ -252,6 +252,7 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  transition: 0.3s ease, color 0.3s ease;
 }
 .fees-row.highlight .fees-text {
   display: flex;
@@ -282,6 +283,11 @@
   display: inline-block;
 }
 
+.fees-row.highlight:hover {
+  background: #194274 !important; /* replaces gradient */
+  color: #0a1f38 !important;      /* default text color */
+  transition: all 0.3s ease;
+}
 /* RESPONSIVE */
 @media (max-width: 768px) {
   .hero-cards {
@@ -299,7 +305,7 @@
 }
 /* Exam covered */
 .exam-section {
-  padding: 3.75rem 6.25rem;
+  padding: 3.5rem 6.25rem;
 }
 .section-header {
   display: flex;
@@ -327,9 +333,9 @@
 }
 
 .header-line {
-  width: 80px;   
-  height: 5px;   
-  background: linear-gradient(90deg, rgb(163,21,58), rgb(227, 107, 107));
+  width: 80px;
+  height: 5px;
+  background: linear-gradient(90deg, rgb(163, 21, 58), rgb(227, 107, 107));
   border-radius: 2px;
 }
 
@@ -357,12 +363,12 @@
   align-items: center;
   gap: 8px;
   padding: 12px;
-  background-color: #fff;   /* default white */
+  background-color: #fff; /* default white */
   border-radius: 12px;
-  box-shadow: 0 6px 12px rgba(0,0,0,0.08);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
   transition: all 0.3s ease;
   cursor: pointer;
-  color: #0a1f38;           /* default text color */
+  color: #0a1f38; /* default text color */
   font-weight: 600;
   font-size: 0.9rem;
 }
@@ -370,7 +376,7 @@
 .exam-box:hover {
   transform: translateY(-4px);
   background-color: #0a1f38; /* dark on hover */
-  color: #fff;               /* text color white on hover */
+  color: #fff; /* text color white on hover */
 }
 
 /* Span text inside box changes with parent hover */
@@ -380,16 +386,14 @@
 
 /* Tick icon changes with parent hover */
 .tick-icon {
-  color: rgb(163,21,58); 
+  color: rgb(163, 21, 58);
   font-size: 1.2rem;
   transition: color 0.3s ease;
 }
 
 .exam-box:hover .tick-icon {
-  color: rgb(255, 120, 156); 
+  color: rgb(255, 120, 156);
 }
-
-
 
 /* Responsive */
 @media (max-width: 1024px) {
@@ -409,10 +413,100 @@
     grid-template-columns: 1fr;
   }
   .section-header h2 {
-  font-size: 1.5rem;
-  white-space: wrap; 
+    font-size: 1.5rem;
+    white-space: wrap;
+  }
+  .exam-section {
+    padding: 3.75rem 2rem;
+  }
 }
-.exam-section {
-  padding: 3.75rem 2rem;
+/* Exam secured  */
+.secure-career-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 5rem;
 }
+
+.secure-card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 40px;
+  background: linear-gradient(135deg, #0a1f38, #1b3b5a, #274871);
+  color: #fff;
+  border-radius: 30px;
+  padding: 40px;
+  max-width: 900px;
+  width: 100%;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  flex-wrap: wrap; /* for small screens */
+}
+
+.scholar-image {
+  font-size: 3rem;
+  color: #efede5; /* golden hat */
+  flex-shrink: 0;
+}
+
+.secure-text h2 {
+  font-size: 2rem;
+  font-weight: 800;
+  margin-bottom: 16px;
+}
+
+.secure-text p {
+  font-size: 0.8rem;
+  margin-bottom: 24px;
+  color: #f1ccd4;
+  line-height: 1.5;
+  text-align: center;
+  flex-wrap: wrap;
+}
+
+.secure-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.apply-btn,
+.contact-btn {
+  padding: 12px 28px;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  border: none;
+  transition: all 0.3s ease;
+}
+
+/* Apply button style */
+.apply-btn {
+  background-color: #ff3d6d;
+  color: #fff;
+}
+
+.apply-btn:hover {
+  background-color: #e6345c;
+}
+
+/* Contact button style */
+.contact-btn {
+  background-color: #fff;
+  color: #0a1f38;
+}
+
+.contact-btn:hover {
+  background-color: #f0f0f0;
+}
+@media (max-width: 480px) {
+  .secure-career-section {
+    padding: 3.75rem 2rem;
+  }
+  .secure-card{
+    padding: 1rem;
+  }
 }
