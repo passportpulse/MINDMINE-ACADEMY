@@ -19,7 +19,7 @@
   object-fit: contain;
   transform: rotate(5deg);
   border-radius: 9px;
-  background-color: #222;
+  background-color: rgb(12, 35, 64);
   padding: 6px;
 }
 
@@ -66,10 +66,10 @@
   padding: 0.4rem 1.15rem !important; /* override Bootstrap defaults */
   background: linear-gradient(90deg, rgb(163, 21, 58), #330014);
   color: #fff !important;
-  border-radius: 1rem;
+  border-radius: 4rem !important;
   transition: all 0.4s ease;
   font-weight: 600 !important;
-  font-size: 0.75rem;
+  font-size: 0.75rem !important;
   letter-spacing: 0.5px;
 }
 
