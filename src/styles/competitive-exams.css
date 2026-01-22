@@ -289,6 +289,7 @@
     margin-top: -60px;
     gap: 16px;
     align-items: center;
+    padding: 2rem;
   }
 
   .hero-card {
@@ -407,4 +408,11 @@
   .exam-grid {
     grid-template-columns: 1fr;
   }
+  .section-header h2 {
+  font-size: 1.5rem;
+  white-space: wrap; 
+}
+.exam-section {
+  padding: 3.75rem 2rem;
+}
 }
