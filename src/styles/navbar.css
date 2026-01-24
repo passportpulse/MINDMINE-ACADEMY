@@ -1,19 +1,20 @@
-/* Navbar background + spacing */
+/* ================= NAVBAR ================= */
 .navbar-custom {
-  background-color: #fff; /* White background */
-  padding: 0.5rem 2rem;
+  background-color: #fff;
+  padding: 0.5rem 0; /* vertical only */
   box-shadow: 0 1.5px 1.5px rgba(0, 0, 0, 0.1);
+  z-index: 999;
 }
 
 /* Brand logo + text */
-.brand {
+.navbar-custom .brand {
   display: flex;
   align-items: center;
   gap: 10px;
   text-decoration: none;
 }
 
-.brand-logo {
+.navbar-custom .brand-logo {
   width: 32px;
   height: 32px;
   object-fit: contain;
@@ -23,86 +24,71 @@
   padding: 6px;
 }
 
-.brand-text {
+.navbar-custom .brand-text {
   display: flex;
   flex-direction: column;
 }
 
-.brand-mindmine {
+.navbar-custom .brand-mindmine {
   font-size: 0.9rem;
   font-weight: 700;
   color: oklch(0.21 0.034 264.665);
 }
 
-.brand-academy {
+.navbar-custom .brand-academy {
   font-size: 0.8rem;
   font-weight: 400;
   color: rgb(163, 21, 58);
 }
 
-/* Navbar links aligned right */
-.navbar-nav {
+.navbar-custom .navbar-nav {
   gap: 0.5rem;
   display: flex;
   align-items: center;
 }
 
-/* Regular links */
-.nav-link {
+.navbar-custom .nav-link {
   color: oklch(37.3% 0.034 259.733);
-  font-weight: 400 !important;
+  font-weight: 400;
   font-size: 0.85rem;
   position: relative;
   transition: color 0.3s;
 }
 
-.nav-link:hover {
+.navbar-custom .nav-link:hover {
   color: rgb(163, 21, 58);
 }
 
-/* Apply Now button */
-.apply-btn {
-  display: inline-block; /* To Ensure padding works */
-  padding: 0.4rem 1.15rem !important; /* override Bootstrap defaults */
+.navbar-custom .apply-btn {
+  padding: 0.4rem 1.5rem;
   background: linear-gradient(90deg, rgb(163, 21, 58), #330014);
   color: #fff !important;
-  border-radius: 4rem !important;
-  transition: all 0.4s ease;
-  font-weight: 600 !important;
-  font-size: 0.75rem !important;
+  border-radius: 4rem;
+  font-weight: 600;
+  font-size: 0.75rem;
   letter-spacing: 0.5px;
+  transition: all 0.4s ease;
 }
 
-/* Hover effect */
-.apply-btn:hover {
+.navbar-custom .apply-btn:hover {
   opacity: 0.85;
 }
 
-/* Active navbar link underline */
-.nav-link.active-link:not(.apply-btn) {
+.navbar-custom .nav-link.active-link:not(.apply-btn) {
   text-decoration: underline;
   text-underline-offset: 6px;
   text-decoration-thickness: 2px;
-  font-weight: 600 !important;
+  font-weight: 600;
   color: rgb(163, 21, 58);
 }
-.nav-link {
-  transition:
-    color 0.3s,
-    text-decoration 0.3s;
-}
 
-/* Responsive adjustments */
 @media (max-width: 992px) {
-  .navbar-nav {
+  .navbar-custom .navbar-nav {
     flex-direction: column;
     gap: 1rem;
   }
 
-  .brand {
+  .navbar-custom .brand {
     margin-bottom: 0.5rem;
-  }
-  .navbar-custom {
-    padding: 0.5rem 0.5rem;
   }
 }

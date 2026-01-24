@@ -1,9 +1,11 @@
+/* ================= FOOTER ================= */
 .footer {
   background-color: #0f2439;
   color: #fff;
-  padding: 3rem 3rem 2rem 3rem;
+  padding: 3rem 0 2rem 0; /* vertical only */
   font-family: "Inter", sans-serif;
 }
+
 .footer-brand {
   display: flex;
   align-items: center;
@@ -20,6 +22,7 @@
   background-color: white;
   padding: 6px;
 }
+
 .footer-socials {
   display: flex;
   gap: 0.5rem;
@@ -40,21 +43,16 @@
 }
 
 .footer-socials a:hover {
-  color: #fff;
   transform: scale(1.1);
+  color: #fff;
 }
 
-/* Facebook */
 .footer-socials a.facebook:hover {
   background-color: rgb(33, 88, 184);
 }
-
-/* Instagram */
 .footer-socials a.instagram:hover {
   background-color: rgb(163, 21, 58);
 }
-
-/* LinkedIn */
 .footer-socials a.linkedin:hover {
   background-color: rgb(10, 102, 194);
 }
@@ -78,11 +76,10 @@
 .footer-container {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 3rem;
+  gap: 2rem;
   margin-bottom: 2rem;
 }
 
-/* Column headings */
 .footer-col h3 {
   font-size: 0.88rem;
   font-weight: 600;
@@ -90,7 +87,6 @@
   color: #fff;
 }
 
-/* Lists in footer */
 .footer-col ul {
   list-style: none;
   padding: 0;
@@ -101,21 +97,18 @@
   font-size: 0.7rem;
 }
 
-/* Paragraphs */
 .footer-col p {
-  font-size: 0.875rem;
+  font-size: 0.7rem;
   line-height: 1.5;
   color: oklch(0.704 0.04 256.788);
-  font-size: 0.7rem;
 }
 
 .footer-item {
   display: flex;
   align-items: flex-start;
   gap: 0.6rem;
-  font-size: 0.875rem;
-  line-height: 1.5;
 }
+
 .footer-item a {
   margin-top: 4px;
 }
@@ -130,7 +123,6 @@
   flex-shrink: 0;
 }
 
-/* Bottom row */
 .footer-bottom {
   border-top: 0.2px solid rgba(255, 255, 255, 0.2);
   margin-top: 3rem;
@@ -140,14 +132,13 @@
   text-align: left;
 }
 
-/* Responsive */
+/* FOOTER RESPONSIVE */
 @media (max-width: 992px) {
   .footer-container {
     grid-template-columns: repeat(2, 1fr);
-    gap: 1.5rem;
+    gap: 2rem;
   }
 }
-
 @media (max-width: 576px) {
   .footer-container {
     grid-template-columns: 1fr;

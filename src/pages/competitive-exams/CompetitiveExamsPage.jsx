@@ -1,15 +1,14 @@
-import Hero from './Hero'
+
+import HeroSection from './HeroSection'
 import ExamCovered from './ExamCovered'
 import SecureCarrier from './SecureCarrier'
-import "../../styles/competitive-exams.css"
+
 export default function CompetitiveExamsPage() {
   return (
     <>
-    <div className="competitive-exams-page">
-      <Hero />
+      <HeroSection />
       <ExamCovered />
       <SecureCarrier />
-    </div>
     </>
   )
 }

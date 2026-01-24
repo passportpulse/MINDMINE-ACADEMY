@@ -1,4 +1,4 @@
-import React from "react";
+import "../../styles/competitive-exams/secure-carrier.css";
 import { FaGraduationCap } from "react-icons/fa"; // scholar hat icon
 
 export default function SecureCarrier() {

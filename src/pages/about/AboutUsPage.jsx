@@ -1,7 +1,13 @@
-import React from 'react'
+import HeroSection from "./HeroSection";
+import VisionAndMission from "./VisionAndMission";
+import WhyStandApart from "./WhyStandApart";
 
 export default function AboutUsPage() {
   return (
-    <div>AboutUsPage</div>
-  )
+    <>
+      <HeroSection />
+      <VisionAndMission/>
+      <WhyStandApart/>
+    </>
+  );
 }

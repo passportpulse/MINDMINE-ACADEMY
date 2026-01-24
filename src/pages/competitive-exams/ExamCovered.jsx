@@ -1,6 +1,7 @@
 import React from "react";
 import { FaCheckCircle } from "react-icons/fa";
 import { BookOpenIcon } from "@heroicons/react/24/outline";
+import "../../styles/competitive-exams/exam-covered.css";
 
 export default function ExamCovered() {
   const generalExams = [
@@ -47,23 +48,25 @@ export default function ExamCovered() {
 
   return (
     <section className="exam-section">
-      <div className="section-header">
-        <BookOpenIcon className="section-icon" />
+      <div className="container">
+        <div className="section-header">
+          <BookOpenIcon className="section-icon" />
 
-        <h2>Competitive Exams Covered</h2>
-        <span className="header-line"></span>
-      </div>
+          <h2>Competitive Exams Covered</h2>
+          <span className="header-line"></span>
+        </div>
 
-      {/* General Courses */}
-      <div className="exam-category">
-        <h3>General Courses</h3>
-        {renderGrid(generalExams)}
-      </div>
+        {/* General Courses */}
+        <div className="exam-category">
+          <h3>General Courses</h3>
+          {renderGrid(generalExams)}
+        </div>
 
-      {/* Special Courses */}
-      <div className="exam-category">
-        <h3>Special Courses</h3>
-        {renderGrid(specialExams)}
+        {/* Special Courses */}
+        <div className="exam-category">
+          <h3>Special Courses</h3>
+          {renderGrid(specialExams)}
+        </div>
       </div>
     </section>
   );

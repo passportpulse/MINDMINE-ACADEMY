@@ -11,12 +11,14 @@ import ProcessPage from "../pages/process/ProcessPage";
 import CampusesPage from "../pages/campuses/CampusesPage";
 import ContactPage from "../pages/contact/ContactPage";
 import ApplyNowPage from "../pages/apply-now/ApplyNowPage";
+import CourseDetailsPage from "../pages/home/CourseDetailsPage";
 
 export default function AppRoutes(){
   return (
     <Routes>
       <Route element={<MainLayout />}>
         <Route path="/" element={<HomePage />} />
+        <Route path="/course/:slug" element={<CourseDetailsPage />} />
         <Route path="/about-us" element={<AboutUsPage />} />
         <Route path="/competitive-exams" element={<CompetitiveExamsPage />} />
         <Route path="/admission-guidance" element={<AdmissionGuidancePage />} />

@@ -1,0 +1,37 @@
+import React from "react";
+import { FaDownload } from "react-icons/fa";
+import "../../styles/home/admission-open-section.css";
+
+export default function AdmissionsOpen() {
+  const currentYear = new Date().getFullYear();
+
+  return (
+    <section className="admissions-section">
+      <div className="container">
+        <div className="admissions-container">
+          <div className="admissions-text">
+            <h2>Admissions Open — {currentYear}</h2>
+            <p>
+              Apply now for B.Voc (AI, Animation & Software Development) and GNM
+              Nursing programs. Very limited seats across 3 campuses.
+            </p>
+
+            <div className="admissions-buttons">
+              <button
+                className="admissions-apply-btn"
+                onClick={() => (window.location.href = "/apply-now")}
+              >
+                Apply for Admission
+              </button>
+
+              <button className="admissions-brochure-btn">
+                <FaDownload style={{ marginRight: "8px" }} />
+                Download Brochure
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}

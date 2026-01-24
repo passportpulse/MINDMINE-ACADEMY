@@ -1,4 +1,5 @@
 import { useState } from "react";
+import "../../styles/admission-guidance/hero-section.css";
 
 export default function Hero() {
   const [active, setActive] = useState("all");

@@ -1,4 +1,4 @@
-import React from "react";
+import "../../styles/admission-guidance/council-course.css";
 
 export default function CouncilCourse() {
   const councilPrograms = [
@@ -26,26 +26,30 @@ export default function CouncilCourse() {
 
   return (
     <section className="council-section" id="council">
-      <h2 className="section-heading">Council & Professional Programs</h2>
-      <p className="section-subtext">
-        Government-recognized council courses and professional pathways with
-        strong career outcomes
-      </p>
+      <div className="container">
+        <div className="section-header">
+          <h2 className="council-section-heading">Council & Professional Programs</h2>
+          <p className="council-section-subtext">
+            Government-recognized council courses and professional pathways with
+            strong career outcomes
+          </p>
+        </div>
 
-      <div className="council-grid">
-        {councilPrograms.map((group, index) => (
-          <div className="council-card" key={index}>
-            <h3 className="council-title">{group.category}</h3>
+        <div className="council-grid">
+          {councilPrograms.map((group, index) => (
+            <div className="council-card" key={index}>
+              <h3 className="council-title">{group.category}</h3>
 
-            <div className="council-courses">
-              {group.courses.map((course, i) => (
-                <span className="council-pill" key={i}>
-                  {course}
-                </span>
-              ))}
+              <div className="council-courses">
+                {group.courses.map((course, i) => (
+                  <span className="council-pill" key={i}>
+                    {course}
+                  </span>
+                ))}
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </section>
   );
