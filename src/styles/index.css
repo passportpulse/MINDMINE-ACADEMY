@@ -7,11 +7,13 @@
 
 /* Main layout container */
 .container {
-  width: 100%;
   max-width: 1200px;
-  margin-inline: auto;
-  padding-inline: 3rem;   /* desktop padding FIX */
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: clamp(1rem, 4vw, 3rem);
+  padding-right: clamp(1rem, 4vw, 3rem);
 }
+
 
 /* Large tablets */
 @media (max-width: 992px) {
@@ -43,4 +45,7 @@ body {
 
 section {
   outline: 2px dashed green;
+}
+html, body {
+  overflow-x: hidden;
 }
