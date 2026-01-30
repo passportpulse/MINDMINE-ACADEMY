@@ -2,10 +2,17 @@ const mongoose = require("mongoose");
 
 const applicationSchema = new mongoose.Schema(
   {
+    // ✅ IDs
+    trackingId: {
+      type: String,
+      unique: true,
+      required: true  // generated on student submission
+    },
     applicationId: {
       type: String,
       unique: true,
-      required: true
+      sparse: true,  // allows null until approved
+      default: null  // generated only on approval
     },
 
     // Campus & Course
@@ -27,7 +34,7 @@ const applicationSchema = new mongoose.Schema(
     city: String,
     state: {
       type: String,
-      default: "West Bengal"
+      // default: "West Bengal"
     },
     pinCode: String,
     phone: String,
@@ -53,9 +60,7 @@ const applicationSchema = new mongoose.Schema(
       type: String,
       enum: ["pending", "approved", "rejected"],
       default: "pending"
-    },
-
-    registrationId: String
+    }
   },
   { timestamps: true }
 );

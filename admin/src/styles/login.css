@@ -1,0 +1,116 @@
+.login-container {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #f8fafc;
+}
+
+/* Card */
+
+.login-card {
+  background: #ffffff;
+  padding: 42px;
+  width: 100%;
+  max-width: 380px;
+  border-radius: 14px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+/* Title */
+
+.login-card h2 {
+  text-align: center;
+  color: #0f172a;
+  margin-bottom: 12px;
+  font-weight: 600;
+}
+
+/* Inputs */
+
+.login-card input {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  outline: none;
+  box-sizing: border-box;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.login-card input:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.15);
+}
+
+/* Password field wrapper */
+
+.password-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.password-wrapper input {
+  padding-right: 44px; /* space for eye icon */
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+}
+
+/* Eye toggle button — isolated style */
+.eye-btn {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent; /* make sure no bg */
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.eye-btn svg {
+  width: 20px;
+  height: 20px;
+  stroke: #6b7280;
+  fill: none;
+  stroke-width: 2;
+  transition: stroke 0.2s ease;
+}
+
+.eye-btn:hover svg {
+  stroke: #2563eb;
+}
+
+/* Main login button — separate, cannot affect eye button */
+.login-card .login-btn {
+  background: #3b82f6;
+  color: white;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.login-card .login-btn:hover {
+  background: #2563eb;
+}
+
+.login-card .login-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Error text */
+.error-text {
+  color: #dc2626;
+  font-size: 0.85rem;
+  text-align: center;
+}

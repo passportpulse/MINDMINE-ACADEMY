@@ -3,9 +3,10 @@ const express = require("express");
 const connectDB = require("./config/db");
 const cors = require("cors");
 
+const adminAuthRoutes = require("./routes/adminAuth");
 const enquiryRoutes = require("./routes/enquiryRoutes");
 const applicationRoutes = require("./routes/applicationRoutes");
-const adminAuthRoutes = require("./routes/adminAuth");
+const noticeRoutes = require("./routes/noticeRoutes");
 
 const app = express();
 
@@ -14,9 +15,10 @@ app.use(cors());            // allow frontend requests
 app.use(express.json());   // parse JSON body
 
 // ✅ routes
+app.use("/api/admin", adminAuthRoutes);
 app.use("/api/enquiry", enquiryRoutes);
 app.use("/api/application", applicationRoutes);
-app.use("/api/admin", adminAuthRoutes);
+app.use("/api/notice", noticeRoutes);
 
 // connect database
 connectDB();
