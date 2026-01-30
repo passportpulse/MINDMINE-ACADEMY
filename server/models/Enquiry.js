@@ -1,0 +1,13 @@
+const mongoose = require("mongoose");
+
+const enquirySchema = new mongoose.Schema(
+  {
+    fullName: String,
+    email: String,
+    subject: String,
+    message: String
+  },
+  { timestamps: true }
+);
+
+module.exports = mongoose.model("Enquiry", enquirySchema);

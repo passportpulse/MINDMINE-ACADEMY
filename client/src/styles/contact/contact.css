@@ -177,3 +177,24 @@
     font-size: 0.85rem;
   }
 }
+.success-box {
+  text-align: center;
+  padding: 40px;
+  border: 2px solid #22c55e;
+  border-radius: 14px;
+  background: #f0fdf4;
+}
+
+.success-box h2 {
+  color: #16a34a;
+}
+
+.error-box {
+  margin-top: 12px;
+  padding: 14px;
+  border-radius: 8px;
+  background: #fef2f2;
+  border: 1px solid #ef4444;
+  color: #b91c1c;
+  text-align: center;
+}

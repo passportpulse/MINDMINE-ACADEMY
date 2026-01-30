@@ -10,19 +10,15 @@ export default function HeroSection() {
       <div className="container hero-container">
         {/* LEFT CONTENT */}
         <div className="hero-left animate-text">
-          <h4 className="hero-subtitle">
-            MINDMINE ACADEMY
-          </h4>
+          <h4 className="hero-subtitle">MINDMINE ACADEMY</h4>
 
           <h1 className="hero-title">
-            UGC Approved B.Voc Degree Programs
-            <br /> in <span> Technology & Nursing </span>
+            Learn. Grow. Lead.”
+            <br /> <span>“Turning Dreams into Achievements</span>
           </h1>
 
           <p className="hero-description">
-            Join India's premier skill–based education institute offering
-            UGC–approved degrees that connect academia with real industry
-            experience.
+            Academy is simply Tutorials and Higher education degree solution
           </p>
 
           <div className="hero-buttons">

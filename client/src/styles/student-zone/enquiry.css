@@ -76,3 +76,27 @@
     padding: 25px 20px;
   }
 }
+/* Success and error */
+.success-box {
+  max-width: 600px;
+  margin: 30px auto;
+  padding: 35px 30px;
+  text-align: center;
+  background: #f0fff4;
+  border: 2px solid #38a169;
+  border-radius: 14px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  animation: fadeIn 0.4s ease-in-out;
+}
+
+.success-box h2 {
+  color: #2f855a;
+  font-size: 26px;
+  margin-bottom: 10px;
+}
+
+.success-box p {
+  font-size: 16px;
+  color: #333;
+  margin: 6px 0;
+}
