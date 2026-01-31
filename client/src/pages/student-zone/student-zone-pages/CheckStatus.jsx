@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Hero from "../Hero";
 import "../../../styles/student-zone/check-status.css";
 
-const API = "http://localhost:5000";
+const API = "https://mindmine-academy.onrender.com";
 
 export default function CheckStatus() {
   const [trackingId, setTrackingId] = useState("");

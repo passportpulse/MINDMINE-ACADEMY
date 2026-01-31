@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "../../../styles/student-zone/notices.css";
 import Hero from "../Hero";
 
-const API = "http://localhost:5000";
+const API = "https://mindmine-academy.onrender.com";
 
 export default function Notices() {
   const [notices, setNotices] = useState([]);
