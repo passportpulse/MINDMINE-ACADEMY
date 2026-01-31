@@ -1,30 +1,29 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "../../../styles/student-zone/notices.css";
-import notice from "../../../assets/notice.jpeg";
 import Hero from "../Hero";
 
+const API = "http://localhost:5000";
+
 export default function Notices() {
-  // Example data coming from backend
-  const notices = [
-    {
-      id: 1,
-      title: "Semester registration deadline",
-      date: "31 Jan 2026",
-      image: notice,
-    },
-    {
-      id: 2,
-      title: "New courses available from next session",
-      date: "10 Feb 2026",
-      image: notice,
-    },
-    {
-      id: 3,
-      title: "Payment deadlines extended",
-      date: "15 Feb 2026",
-      image: notice,
-    },
-  ];
+  const [notices, setNotices] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+
+  // Fetch all notices (public)
+  useEffect(() => {
+    async function fetchNotices() {
+      try {
+        const res = await fetch(`${API}/api/notice`);
+        const data = await res.json();
+        if (data.success) setNotices(data.notices);
+      } catch (err) {
+        console.error(err);
+      }
+    }
+    fetchNotices();
+  }, []);
+
+  // Current notice (ONE at a time)
+  const currentNotice = notices[currentPage - 1];
 
   return (
     <>
@@ -32,22 +31,84 @@ export default function Notices() {
         title="Notices"
         description="Check the latest updates and notifications."
       />
-      <section className="notices-section">
-        <div className="notices-header">
-          <h2>Notice Board</h2>
-        </div>
-        <div className="notices-grid">
-          {notices.map((notice) => (
-            <div key={notice.id} className="notice-card">
-              <div className="notice-image">
-                <img src={notice.image} alt={notice.title} />
-              </div>
-              <div className="notice-content">
-                <h3>{notice.title}</h3>
-                <span>{notice.date}</span>
-              </div>
+
+      <section className="notices-section blackboard">
+        {/* Show single notice */}
+        {currentNotice && (
+          <div className="single-notice">
+            <img
+              src={`${API}/${currentNotice.image.replace(/\\/g, "/")}`}
+              alt={currentNotice.title}
+            />
+            <div className="notice-content">
+              <h3>{currentNotice.title}</h3>
+              <span>
+                {new Date(currentNotice.createdAt).toLocaleDateString()}
+              </span>
             </div>
-          ))}
+          </div>
+        )}
+
+        {/* Pagination */}
+        <div className="pagination">
+          {/* Prev arrow */}
+          <button
+            className="arrow"
+            disabled={currentPage === 1}
+            onClick={() => setCurrentPage((p) => p - 1)}
+          >
+            ←
+          </button>
+
+          {(() => {
+            const pages = [];
+            const total = notices.length;
+
+            if (total <= 6) {
+              for (let i = 1; i <= total; i++) pages.push(i);
+            } else {
+              if (currentPage <= 3) {
+                pages.push(1, 2, 3, "...", total - 1, total);
+              } else if (currentPage >= total - 2) {
+                pages.push(1, 2, "...", total - 2, total - 1, total);
+              } else {
+                pages.push(
+                  1,
+                  "...",
+                  currentPage - 1,
+                  currentPage,
+                  currentPage + 1,
+                  "...",
+                  total,
+                );
+              }
+            }
+
+            return pages.map((p, i) =>
+              p === "..." ? (
+                <span key={i} className="dots">
+                  ...
+                </span>
+              ) : (
+                <button
+                  key={i}
+                  className={currentPage === p ? "active" : ""}
+                  onClick={() => setCurrentPage(p)}
+                >
+                  {p}
+                </button>
+              ),
+            );
+          })()}
+
+          {/* Next arrow */}
+          <button
+            className="arrow"
+            disabled={currentPage === notices.length}
+            onClick={() => setCurrentPage((p) => p + 1)}
+          >
+            →
+          </button>
         </div>
       </section>
     </>

@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { createNotice, getAllNotices } = require("../controllers/noticeController");
+const { createNotice, getAllNotices, updateNotice, deleteNotice } = require("../controllers/noticeController");
 const auth = require("../middleware/auth");
 const multer = require("multer");
 
@@ -11,7 +11,10 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage });
 
+// Routes
 router.post("/", auth, upload.single("file"), createNotice);
-router.get("/", auth, getAllNotices);
+router.get("/", getAllNotices);
+router.put("/:id", auth, upload.single("file"), updateNotice);
+router.delete("/:id", auth, deleteNotice);
 
 module.exports = router;

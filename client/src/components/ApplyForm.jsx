@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "../../styles/apply-now/form.css";
+import "../styles/form.css";
 
 export default function ApplyForm() {
   const [formData, setFormData] = useState({
@@ -24,11 +24,12 @@ export default function ApplyForm() {
     motherPhone: "",
     guardianName: "",
     guardianRelation: "",
-    guardianPhone: ""
+    guardianPhone: "",
   });
 
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [trackingId, setTrackingId] = useState("");
   const [error, setError] = useState("");
 
   const handleChange = (e) => {
@@ -36,11 +37,16 @@ export default function ApplyForm() {
   };
 
   const handleSubmit = async (e) => {
+    console.log("clicked");
     e.preventDefault();
     setError("");
-
-    // ✅ BASIC VALIDATION
-    if (!formData.course || !formData.fullName || !formData.phone || !formData.email) {
+    console.log("FORM DATA BEING SENT 👉", formData);
+    if (
+      !formData.course ||
+      !formData.fullName ||
+      !formData.phone ||
+      !formData.email
+    ) {
       setError("Please fill all required fields");
       return;
     }
@@ -56,35 +62,45 @@ export default function ApplyForm() {
       const res = await fetch("http://localhost:5000/api/application", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData)
+        body: JSON.stringify(formData),
       });
 
-      if (!res.ok) throw new Error();
+      const data = await res.json();
 
+      if (!res.ok) throw new Error(data.message);
+
+      setTrackingId(data.trackingId);
       setSubmitted(true);
-    } catch {
-      setError("Submission failed. Try again.");
+    } catch (err) {
+      setError(err.message || "Submission failed. Please try again.");
     } finally {
       setLoading(false);
     }
   };
 
+  // ✅ SUCCESS SCREEN
   if (submitted) {
     return (
       <div className="apply-form-container">
         <div className="apply-form-card success-box">
-          <h2>🎉 Application Submitted!</h2>
-          <p>Thank you for applying to MindMine Academy.</p>
+          <h2>🎉 Application Submitted Successfully!</h2>
+          <p>Thank you for applying to Mindmine Academy.</p>
+
+          <div className="tracking-box">
+            <strong>Your Tracking ID:</strong>
+            <span>{trackingId}</span>
+          </div>
+
           <p>A confirmation email has been sent 📩</p>
         </div>
       </div>
     );
   }
 
+  // ✅ FORM
   return (
     <div className="apply-form-container">
       <div className="apply-form-card">
-
         <div className="form-header">
           <h1>Student Enrollment Form</h1>
           <p className="form-info">
@@ -93,11 +109,14 @@ export default function ApplyForm() {
         </div>
 
         <form onSubmit={handleSubmit}>
-
           <h2>Campus & Course Info</h2>
           <div className="grid-2">
             <input name="campus" placeholder="Campus" onChange={handleChange} />
-            <input name="campusLocation" placeholder="Campus Location" onChange={handleChange} />
+            <input
+              name="campusLocation"
+              placeholder="Campus Location"
+              onChange={handleChange}
+            />
             <input
               className="full-width"
               name="course"
@@ -108,7 +127,11 @@ export default function ApplyForm() {
 
           <h2>Student Details</h2>
           <div className="grid-2">
-            <input name="fullName" placeholder="Full Name *" onChange={handleChange} />
+            <input
+              name="fullName"
+              placeholder="Full Name *"
+              onChange={handleChange}
+            />
             <input type="date" name="dob" onChange={handleChange} />
 
             <select name="gender" onChange={handleChange}>
@@ -126,7 +149,11 @@ export default function ApplyForm() {
               <option>OBC</option>
             </select>
 
-            <input name="aadhaar" placeholder="Aadhaar No" onChange={handleChange} />
+            <input
+              name="aadhaar"
+              placeholder="Aadhaar No"
+              onChange={handleChange}
+            />
 
             <input value="Indian" disabled />
 
@@ -141,29 +168,74 @@ export default function ApplyForm() {
             <input value="West Bengal" disabled />
 
             <input name="pin" placeholder="Pin Code" onChange={handleChange} />
-            <input name="phone" placeholder="Contact No *" onChange={handleChange} />
-            <input name="email" type="email" placeholder="Email *" onChange={handleChange} />
+            <input
+              name="phone"
+              placeholder="Contact No *"
+              onChange={handleChange}
+            />
+            <input
+              name="email"
+              type="email"
+              placeholder="Email *"
+              onChange={handleChange}
+            />
           </div>
 
           <h2>Father's Info</h2>
           <div className="grid-2">
-            <input name="fatherName" placeholder="Father Name" onChange={handleChange} />
-            <input name="fatherOccupation" placeholder="Occupation" onChange={handleChange} />
-            <input name="fatherPhone" placeholder="Phone" onChange={handleChange} />
+            <input
+              name="fatherName"
+              placeholder="Father Name"
+              onChange={handleChange}
+            />
+            <input
+              name="fatherOccupation"
+              placeholder="Occupation"
+              onChange={handleChange}
+            />
+            <input
+              name="fatherPhone"
+              placeholder="Phone"
+              onChange={handleChange}
+            />
           </div>
 
           <h2>Mother's Info</h2>
           <div className="grid-2">
-            <input name="motherName" placeholder="Mother Name" onChange={handleChange} />
-            <input name="motherOccupation" placeholder="Occupation" onChange={handleChange} />
-            <input name="motherPhone" placeholder="Phone" onChange={handleChange} />
+            <input
+              name="motherName"
+              placeholder="Mother Name"
+              onChange={handleChange}
+            />
+            <input
+              name="motherOccupation"
+              placeholder="Occupation"
+              onChange={handleChange}
+            />
+            <input
+              name="motherPhone"
+              placeholder="Phone"
+              onChange={handleChange}
+            />
           </div>
 
           <h2>Local Guardian</h2>
           <div className="grid-3">
-            <input name="guardianName" placeholder="Name" onChange={handleChange} />
-            <input name="guardianRelation" placeholder="Relation" onChange={handleChange} />
-            <input name="guardianPhone" placeholder="Phone" onChange={handleChange} />
+            <input
+              name="guardianName"
+              placeholder="Name"
+              onChange={handleChange}
+            />
+            <input
+              name="guardianRelation"
+              placeholder="Relation"
+              onChange={handleChange}
+            />
+            <input
+              name="guardianPhone"
+              placeholder="Phone"
+              onChange={handleChange}
+            />
           </div>
 
           <button className="submit-btn" disabled={loading}>
@@ -171,7 +243,6 @@ export default function ApplyForm() {
           </button>
 
           {error && <div className="error-box">{error}</div>}
-
         </form>
       </div>
     </div>

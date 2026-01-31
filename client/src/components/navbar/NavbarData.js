@@ -41,6 +41,7 @@ export const navLinks = [
       { label: "Enquiry", path: "/student-zone/enquiry" },
       { label: "Apply", path: "/student-zone/apply" },
       { label: "Notices", path: "/student-zone/notices" },
+      { label: "Check Status", path: "/student-zone/check-status" },
       { label: "Payment", path: "/student-zone/payment" },
     ],
   },

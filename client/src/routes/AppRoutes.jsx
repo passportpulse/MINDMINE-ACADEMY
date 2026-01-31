@@ -14,11 +14,13 @@ import CampusesPage from "../pages/campuses/CampusesPage";
 import ContactPage from "../pages/contact/ContactPage";
 import ApplyNowPage from "../pages/apply-now/ApplyNowPage";
 import CourseDetailsPage from "../pages/home/CourseDetailsPage";
-import Apply from "../pages/student-zone/student-zone-pages/Apply";
+
 import Notices from "../pages/student-zone/student-zone-pages/Notices";
 import Payment from "../pages/student-zone/student-zone-pages/Payment";
 import Enquiry from "../pages/student-zone/student-zone-pages/Enquiry";
 import NotFoundPage from "../pages/not-found/NotFoundPage";
+import ApplyForm from "../components/ApplyForm";
+import CheckStatus from "../pages/student-zone/student-zone-pages/CheckStatus";
 
 export default function AppRoutes() {
   return (
@@ -34,8 +36,9 @@ export default function AppRoutes() {
         <Route path="/tutorials/mock-test" element={<MockTest />} />
         <Route path="/tutorials/general-studies" element={<GeneralStudies />} />
         <Route path="/student-zone/enquiry" element={<Enquiry />} />
-        <Route path="/student-zone/apply" element={<Apply />} />
+        <Route path="/student-zone/apply" element={<ApplyForm />} />
         <Route path="/student-zone/notices" element={<Notices />} />
+        <Route path="/student-zone/check-status" element={<CheckStatus />} />
         <Route path="/student-zone/payment" element={<Payment />} />
         <Route path="/process" element={<ProcessPage />} />
         <Route path="/campuses" element={<CampusesPage />} />

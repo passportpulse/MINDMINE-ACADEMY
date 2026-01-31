@@ -1,72 +1,173 @@
+/* Container */
 .upload-container {
-  min-height: 100vh; /* full viewport height */
-  display: flex;
-  justify-content: center; /* horizontal center */
-  align-items: center;     /* vertical center */
-  background: #f8fafc;     /* soft light gray */
-  padding: 20px;
-}
-
-.upload-card {
-  background: #ffffff;
-  width: 100%;
-  max-width: 450px;
-  border-radius: 12px;
-  padding: 30px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  align-items: center;
+  padding: 2rem;
+  background: #f5f5f5;
+  min-height: 100vh;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Upload Card */
+.upload-card {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+  margin-bottom: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
 
 .upload-card h2 {
   text-align: center;
-  font-size: 1.8rem;
-  font-weight: 600;
-  color: #0f172a;
-  margin-bottom: 20px;
+  margin-bottom: 1rem;
+  color: #333;
 }
 
 .upload-card input[type="text"],
 .upload-card input[type="file"] {
-  padding: 12px 14px;
-  border: 1px solid #e2e8f0;
+  padding: 0.8rem;
   border-radius: 8px;
-  font-size: 0.95rem;
-  outline: none;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
-}
-
-.upload-card input[type="text"]:focus {
-  border-color: #3b82f6;
-  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.15);
+  border: 1px solid #ccc;
+  font-size: 1rem;
 }
 
 .upload-card button {
-  background: #3b82f6;
-  color: #fff;
-  padding: 12px;
+  padding: 0.8rem;
+  background-color: #007bff;
+  color: white;
   border: none;
   border-radius: 8px;
-  font-size: 0.95rem;
+  font-size: 1rem;
   cursor: pointer;
-  transition: background 0.2s ease;
+  transition: background 0.2s, transform 0.2s;
 }
 
 .upload-card button:hover {
-  background: #2563eb;
+  background-color: #0069d9;
+  transform: scale(1.02);
 }
 
+/* Preview Image */
 .preview-container {
-  margin-top: 10px;
   text-align: center;
 }
 
 .preview-container img {
-  width: 100%;
-  max-height: 300px;
-  object-fit: contain;
-  border: 1px solid #d1d5db;
+  max-width: 100%;
+  max-height: 200px;
   border-radius: 8px;
-  margin-top: 6px;
+  margin-top: 0.5rem;
+}
+
+/* Previous Notices */
+.previous-notices {
+  width: 100%;
+  max-width: 900px;
+}
+
+.previous-notices h2 {
+  text-align: center;
+  margin-bottom: 1rem;
+  color: #333;
+}
+
+/* Notices grid */
+.notices-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1rem;
+  justify-items: center;
+}
+
+/* Individual notice card */
+.notice-card {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  width: 100%;
+  max-width: 250px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.notice-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+.notice-card img {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+}
+
+.notice-info {
+  padding: 0.8rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.notice-info h3 {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #333;
+}
+
+.notice-info span {
+  font-size: 0.85rem;
+  color: #666;
+}
+
+.notice-actions {
+  margin-top: 0.5rem;
+  display: flex;
+  gap: 0.5rem;
+  justify-content: flex-end;
+}
+
+.notice-actions button {
+  padding: 0.4rem 0.8rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 0.85rem;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.notice-actions button:first-child {
+  background-color: #28a745;
+  color: white;
+}
+
+.notice-actions button:first-child:hover {
+  background-color: #218838;
+  transform: scale(1.05);
+}
+
+.notice-actions button:last-child {
+  background-color: #dc3545;
+  color: white;
+}
+
+.notice-actions button:last-child:hover {
+  background-color: #c82333;
+  transform: scale(1.05);
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .notices-list {
+    grid-template-columns: 1fr;
+  }
 }

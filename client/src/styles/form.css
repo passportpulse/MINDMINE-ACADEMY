@@ -200,3 +200,15 @@ textarea {
     transform: translateY(0);
   }
 }
+.success-box {
+  text-align: center;
+  padding: 40px;
+}
+
+.tracking-box {
+  margin: 20px 0;
+  font-size: 1.1rem;
+  background: #f5f7ff;
+  padding: 12px;
+  border-radius: 8px;
+}

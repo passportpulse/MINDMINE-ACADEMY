@@ -1,6 +1,6 @@
 import React from "react";
 import Hero from "./Hero";
-import ApplyForm from "./ApplyForm";
+import ApplyForm from "../../components/ApplyForm";
 
 export default function ApplyNowPage() {
   return (

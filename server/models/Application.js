@@ -12,7 +12,7 @@ const applicationSchema = new mongoose.Schema(
       type: String,
       unique: true,
       sparse: true,  // allows null until approved
-      default: null  // generated only on approval
+      
     },
 
     // Campus & Course

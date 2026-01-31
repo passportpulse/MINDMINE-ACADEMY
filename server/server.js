@@ -1,7 +1,9 @@
+require("node:dns/promises").setServers(["1.1.1.1", "8.8.8.8"]);
 require("dotenv").config();
 const express = require("express");
 const connectDB = require("./config/db");
 const cors = require("cors");
+const path = require("path");
 
 const adminAuthRoutes = require("./routes/adminAuth");
 const enquiryRoutes = require("./routes/enquiryRoutes");
@@ -14,11 +16,16 @@ const app = express();
 app.use(cors());            // allow frontend requests
 app.use(express.json());   // parse JSON body
 
+// Serve uploads folder
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+
 // ✅ routes
 app.use("/api/admin", adminAuthRoutes);
 app.use("/api/enquiry", enquiryRoutes);
 app.use("/api/application", applicationRoutes);
 app.use("/api/notice", noticeRoutes);
+app.use("/api/payment", require("./routes/payment"));
+
 
 // connect database
 connectDB();

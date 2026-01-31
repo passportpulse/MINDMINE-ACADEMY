@@ -3,7 +3,7 @@ import "../../styles/home/hero-section.css";
 import heroImg from "../../assets/home-hero.avif";
 import { useNavigate } from "react-router-dom";
 
-export default function HeroSection() {
+export default function HomeHeroSection() {
   const navigate = useNavigate();
   return (
     <section className="home-hero-section">

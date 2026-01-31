@@ -56,7 +56,7 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="navbar navbar-expand-lg navbar-custom sticky-top">
+    <nav className="navbar navbar-expand-lg navbar-custom fixed">
       <div className="container">
         {/* Logo */}
         <NavLink

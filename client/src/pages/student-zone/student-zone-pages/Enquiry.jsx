@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import "../../../styles/student-zone/enquiry.css";
 import Hero from "../Hero";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function Enquiry() {
   const [formData, setFormData] = useState({
@@ -11,8 +13,7 @@ export default function Enquiry() {
   });
 
   const [loading, setLoading] = useState(false);
-  const [success, setSuccess] = useState("");
-  const [error, setError] = useState("");
+  const [success, setSuccess] = useState(false); // boolean
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -20,18 +21,16 @@ export default function Enquiry() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError("");
-    setSuccess("");
 
     // ✅ FRONTEND VALIDATION
     if (!formData.name || !formData.email || !formData.subject || !formData.message) {
-      setError("All fields are required");
+      toast.error("All fields are required");
       return;
     }
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(formData.email)) {
-      setError("Enter a valid email address");
+      toast.error("Enter a valid email address");
       return;
     }
 
@@ -45,11 +44,20 @@ export default function Enquiry() {
       });
 
       const data = await res.json();
-      if (!res.ok) throw new Error();
+      if (!res.ok) throw new Error(data.message || "Server Error");
 
-      setSuccess(data.message);
-    } catch {
-      setError("Failed to send enquiry. Please try again.");
+      // ✅ Success
+      toast.success("Your enquiry has been sent successfully!");
+      setSuccess(true);          // hide form
+      setFormData({              // reset form
+        name: "",
+        email: "",
+        subject: "",
+        message: "",
+      });
+    } catch (err) {
+      console.error(err);
+      toast.error("Failed to send enquiry. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -68,25 +76,40 @@ export default function Enquiry() {
             </div>
           )}
 
-          {error && (
-            <div className="error-box">
-              <p>{error}</p>
-            </div>
-          )}
-
           {!success && (
             <form className="enquiry-form" onSubmit={handleSubmit}>
               <label>Full Name *</label>
-              <input name="name" value={formData.name} onChange={handleChange} />
+              <input
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+                placeholder="Enter your full name"
+              />
 
               <label>Email *</label>
-              <input name="email" value={formData.email} onChange={handleChange} />
+              <input
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                placeholder="Enter your email"
+              />
 
               <label>Subject *</label>
-              <input name="subject" value={formData.subject} onChange={handleChange} />
+              <input
+                name="subject"
+                value={formData.subject}
+                onChange={handleChange}
+                placeholder="Subject"
+              />
 
               <label>Message *</label>
-              <textarea name="message" rows={5} value={formData.message} onChange={handleChange} />
+              <textarea
+                name="message"
+                rows={5}
+                value={formData.message}
+                onChange={handleChange}
+                placeholder="Write your message"
+              />
 
               <button className="btn-submit" disabled={loading}>
                 {loading ? "Sending..." : "Submit Message"}
@@ -95,6 +118,16 @@ export default function Enquiry() {
           )}
         </div>
       </section>
+
+      {/* Toast Container */}
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        closeOnClick
+        pauseOnHover
+        draggable
+      />
     </>
   );
 }
