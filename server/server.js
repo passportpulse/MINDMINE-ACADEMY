@@ -13,7 +13,15 @@ const noticeRoutes = require("./routes/noticeRoutes");
 const app = express();
 
 // ✅ middleware (ORDER MATTERS)
-app.use(cors());            // allow frontend requests
+app.use(cors({
+  origin: [
+    "https://www.mindmineacademy.com",
+    "https://admin.mindmineacademy.com"
+  ],
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  credentials: true
+}));
+
 app.use(express.json());   // parse JSON body
 
 // Serve uploads folder
