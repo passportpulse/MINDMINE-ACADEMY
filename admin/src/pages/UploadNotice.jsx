@@ -154,7 +154,7 @@ export default function UploadNotice() {
           {notices.map((notice) => (
             <div key={notice._id} className="notice-card">
               <img
-                src={`http://localhost:5000/${notice.image.replace(/\\/g, "/")}`}
+                src={`${API}/${notice.image.replace(/\\/g, "/")}`}
                 alt={notice.title}
               />
 

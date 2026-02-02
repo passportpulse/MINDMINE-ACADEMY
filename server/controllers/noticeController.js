@@ -14,7 +14,10 @@ exports.createNotice = async (req, res) => {
       return res.status(400).json({ success: false, message: "File is required" });
     }
 
-    const notice = await Notice.create({ title, image: filePath });
+    // Make relative path for frontend
+    const relativePath = filePath.replace(/\\/g, "/"); // Windows fix
+
+    const notice = await Notice.create({ title, image: relativePath });
     res.json({ success: true, notice });
   } catch (err) {
     console.error(err);
@@ -42,7 +45,7 @@ exports.updateNotice = async (req, res) => {
   try {
     const { id } = req.params;
     const { title } = req.body;
-    const filePath = req.file?.path;
+    notice.image = filePath.replace(/\\/g, "/");
 
     const notice = await Notice.findById(id);
     if (!notice) return res.status(404).json({ success: false, message: "Notice not found" });
