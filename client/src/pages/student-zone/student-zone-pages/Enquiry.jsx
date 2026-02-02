@@ -21,9 +21,14 @@ export default function Enquiry() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    console.log(formData);
     // ✅ FRONTEND VALIDATION
-    if (!formData.name || !formData.email || !formData.subject || !formData.message) {
+    if (
+      !formData.name ||
+      !formData.email ||
+      !formData.subject ||
+      !formData.message
+    ) {
       toast.error("All fields are required");
       return;
     }
@@ -37,19 +42,23 @@ export default function Enquiry() {
     setLoading(true);
 
     try {
-      const res = await fetch("https://mindmine-academy.onrender.com/api/enquiry", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      });
+      const res = await fetch(
+        "https://mindmine-academy.onrender.com/api/enquiry",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(formData),
+        },
+      );
 
       const data = await res.json();
       if (!res.ok) throw new Error(data.message || "Server Error");
 
       // ✅ Success
       toast.success("Your enquiry has been sent successfully!");
-      setSuccess(true);          // hide form
-      setFormData({              // reset form
+      setSuccess(true); // hide form
+      setFormData({
+        // reset form
         name: "",
         email: "",
         subject: "",
@@ -65,7 +74,10 @@ export default function Enquiry() {
 
   return (
     <>
-      <Hero title="Enquiry" description="Submit your queries or questions here." />
+      <Hero
+        title="Enquiry"
+        description="Submit your queries or questions here."
+      />
 
       <section className="enquiry-section">
         <div className="enquiry-card">
