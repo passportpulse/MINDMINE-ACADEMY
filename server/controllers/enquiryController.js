@@ -51,12 +51,16 @@ exports.createEnquiry = async (req, res) => {
     setImmediate(async () => {
       try {
         const transporter = nodemailer.createTransport({
-          service: "gmail",
+          host: "smtp.gmail.com",
+          port: 465,
+          secure: true, // IMPORTANT (true for 465)
           auth: {
             user: process.env.SMTP_USER,
             pass: process.env.SMTP_PASS,
           },
         });
+        await transporter.verify();
+        console.log("SMTP connected successfully on Render");
 
         await transporter.verify();
         console.log("SMTP READY");
