@@ -87,6 +87,7 @@
   align-items: center;
   z-index: 999;
   backdrop-filter: blur(4px);
+  margin-top: 3rem;
 }
 
 .modal-content {
