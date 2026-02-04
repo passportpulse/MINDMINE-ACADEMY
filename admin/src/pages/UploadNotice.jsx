@@ -1,12 +1,11 @@
 import { useState, useEffect } from "react";
 import "../styles/notice.css";
 
-const API = "https://mindmine-academy.onrender.com";
+const API = "https://mindmine-backend.onrender.com";
 
 export default function UploadNotice() {
   const [title, setTitle] = useState("");
-  const [file, setFile] = useState(null);
-  const [preview, setPreview] = useState(null);
+  const [description, setDescription] = useState("");
   const [notices, setNotices] = useState([]);
   const [editingId, setEditingId] = useState(null);
   const token = localStorage.getItem("adminToken");
@@ -30,30 +29,13 @@ export default function UploadNotice() {
   }, [token]);
 
   // ---------------------
-  // File change & preview
-  // ---------------------
-  const handleFileChange = (e) => {
-    const selectedFile = e.target.files[0];
-    if (selectedFile) {
-      setFile(selectedFile);
-      setPreview(URL.createObjectURL(selectedFile));
-    } else {
-      setFile(null);
-      setPreview(null);
-    }
-  };
-
-  // ---------------------
   // Upload or edit notice
   // ---------------------
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!title) return alert("Please enter a title");
+    if (!title || !description) return alert("Please enter title and description");
 
-    const formData = new FormData();
-    formData.append("title", title);
-    if (file) formData.append("photo", file); // match backend parser.single("photo")
-
+    const payload = { title, description };
     const url = editingId
       ? `${API}/api/notice/update/${editingId}`
       : `${API}/api/notice/add`;
@@ -61,16 +43,18 @@ export default function UploadNotice() {
     try {
       const res = await fetch(url, {
         method: editingId ? "PUT" : "POST",
-        headers: { Authorization: "Bearer " + token },
-        body: formData,
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + token,
+        },
+        body: JSON.stringify(payload),
       });
 
       const data = await res.json();
       if (data.success) {
         alert(`Notice ${editingId ? "updated" : "uploaded"} successfully`);
         setTitle("");
-        setFile(null);
-        setPreview(null);
+        setDescription("");
         setEditingId(null);
         // Refresh notices
         const refreshed = await fetch(`${API}/api/notice/all`, {
@@ -111,7 +95,7 @@ export default function UploadNotice() {
   // ---------------------
   const handleEdit = (notice) => {
     setTitle(notice.title);
-    setPreview(notice.image); // Cloudinary URL
+    setDescription(notice.description);
     setEditingId(notice._id);
   };
 
@@ -127,14 +111,13 @@ export default function UploadNotice() {
           onChange={(e) => setTitle(e.target.value)}
           required
         />
-        <input type="file" accept="image/*" onChange={handleFileChange} />
-
-        {preview && (
-          <div className="preview-container">
-            <p>Preview:</p>
-            <img src={preview} alt="Preview" />
-          </div>
-        )}
+        <textarea
+          placeholder="Description"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+          required
+          rows={5}
+        />
 
         <button type="submit">{editingId ? "Update" : "Upload"}</button>
       </form>
@@ -147,10 +130,9 @@ export default function UploadNotice() {
         <div className="notices-list">
           {notices.map((notice) => (
             <div key={notice._id} className="notice-card">
-              <img src={notice.image} alt={notice.title} /> {/* Cloudinary URL */}
-
               <div className="notice-info">
                 <h3>{notice.title}</h3>
+                <p>{notice.description}</p>
                 <span>{new Date(notice.createdAt).toLocaleDateString()}</span>
                 <div className="notice-actions">
                   <button onClick={() => handleEdit(notice)}>Edit</button>
