@@ -103,11 +103,12 @@ exports.createEnquiry = async (req, res) => {
       message: "Enquiry submitted successfully",
     });
   } catch (err) {
-    console.error("Enquiry error:", err);
+    console.error("ENQUIRY ERROR FULL:", err);
+
     res.status(500).json({
       success: false,
-      message: "Failed to submit enquiry",
+      message: err.message,
+      stack: err.stack,
     });
   }
 };
-
