@@ -42,7 +42,7 @@ export default function Navbar({ token, setToken }) {
         ) : (
           <>
             <Link to="/" onClick={closeMenu}>Login</Link>
-            <Link to="/register" onClick={closeMenu}>Signup</Link>
+            {/* <Link to="/register" onClick={closeMenu}>Signup</Link> */}
           </>
         )}
       </div>
