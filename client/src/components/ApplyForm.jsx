@@ -380,10 +380,10 @@ export default function ApplyForm() {
               </div>
 
               <div className="form-buttons">
-                <button type="button" className="back-btn" onClick={handleBack}>
+                <button type="button" className="apply-back-btn" onClick={handleBack}>
                   ← Back
                 </button>
-                <button type="submit" className="submit-btn" disabled={loading}>
+                <button type="submit" className="apply-submit-btn" disabled={loading}>
                   {loading ? "Submitting..." : "Submit Application"}
                 </button>
               </div>

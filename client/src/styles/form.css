@@ -99,50 +99,82 @@ textarea {
   resize: vertical;
   min-height: 60px;
 }
+/* Container for buttons */
 .form-buttons {
   display: flex;
-  justify-content: center; /* centers child buttons */
-  gap: 10px; /* space between Back and Submit buttons */
-  margin-top: 20px;
-}
-/* Minimal Back Button Styling */
-.back-btn {
-  background-color: transparent; /* no fill */
-  color: #333; /* dark text */
-  border: 1px solid #ccc; /* subtle border */
-  padding: 12px 24px;
-  border-radius: 10px;
-  cursor: pointer;
-  font-size: 0.9rem;
-  transition: all 0.2s ease;
+  justify-content: center;    /* center horizontally */
+  align-items: center;        /* center vertically */
+  gap: 12px;                  /* space between Back and Submit */
+  margin-top: 25px;
+  flex-wrap: wrap;            /* stack on smaller screens */
 }
 
-.back-btn:hover {
-  background-color: #f0f0f0; /* light hover */
-  border-color: #999;
+/* Common button styles */
+.form-buttons button {
+  display: flex;
+  align-items: center;        /* vertical center of text */
+  justify-content: center;    /* horizontal center */
+  height: 42px;               /* fixed height for alignment */
+  line-height: 1;             /* text vertical alignment */
+  padding: 0 22px;            /* horizontal padding only */
+  border-radius: 8px;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-width: 100px;           /* ensures consistent width */
+  box-sizing: border-box;     /* include border/padding in height */
 }
-/* Button */
-.submit-btn {
-  display: inline-block; /* Shrinks width to fit content */
-  /* Space from previous elements */
-  padding: 12px 24px; /* Top-bottom & left-right padding */
+
+/* Back Button */
+.apply-back-btn {
+  background-color: #f5f5f5;  /* light gray background */
+  color: #333;
+  border: 1px solid #ccc;
+  font-weight: 500;
+}
+
+.apply-back-btn:hover {
+  background-color: #e0e0e0;
+  border-color: #999;
+  transform: translateY(-1px);
+}
+
+/* Submit Button */
+.apply-submit-btn {
   background-color: rgb(163, 21, 58);
   color: #fff;
-  font-size: 0.9rem;
-  font-weight: 600;
   border: none;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: 0.3s;
+  font-weight: 600;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
 }
 
-.submit-btn:hover {
-  background-color: rgb(143, 18, 50); /* optional hover effect */
-}
-
-.submit-btn:hover {
+.apply-submit-btn:hover {
   background-color: #b91f48;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
 }
+
+/* Disabled Submit */
+.apply-submit-btn:disabled {
+  background-color: #a53b60;
+  cursor: not-allowed;
+  opacity: 0.7;
+  box-shadow: none;
+}
+
+/* Optional: Responsive - stack buttons on mobile */
+@media (max-width: 500px) {
+  .form-buttons {
+    flex-direction: column;
+  }
+
+  .form-buttons button {
+    width: 100%;
+    max-width: 300px;
+  }
+}
+
+
 
 /* Responsive */
 @media (max-width: 768px) {
