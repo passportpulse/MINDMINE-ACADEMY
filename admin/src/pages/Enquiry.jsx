@@ -1,25 +1,46 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "../styles/enquiry.css";
 
 const API = "https://mindmine-academy.onrender.com";
 
 export default function Enquiry() {
   const [enquiries, setEnquiries] = useState([]);
+  const navigate = useNavigate();
   const token = localStorage.getItem("adminToken");
 
   useEffect(() => {
-    fetch(`${API}/api/enquiry`, {
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        setEnquiries(data);
-        console.log(data);
-      })
-      .catch((err) => console.error("Fetch error:", err));
-  }, [token]);
+    const fetchEnquiries = async () => {
+      try {
+        const res = await fetch(`${API}/api/enquiry`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        // 🔐 Token expired / invalid → logout
+        if (res.status === 401) {
+          localStorage.removeItem("adminToken");
+          navigate("/");
+          return;
+        }
+
+        const data = await res.json();
+
+        // 🛡 Always ensure array (prevents map crash)
+        setEnquiries(Array.isArray(data) ? data : []);
+      } catch (err) {
+        console.error("Fetch error:", err);
+        setEnquiries([]);
+      }
+    };
+
+    if (token) {
+      fetchEnquiries();
+    } else {
+      navigate("/");
+    }
+  }, [token, navigate]);
 
   return (
     <div className="enquiry-container">

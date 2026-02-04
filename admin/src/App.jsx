@@ -12,9 +12,12 @@ import UploadNotice from "./pages/UploadNotice";
 
 // ProtectedRoute must be declared outside App
 function ProtectedRoute({ children, token }) {
-  if (!token) return <Navigate to="/" replace />;
+  if (!token || token === "null" || token === "undefined") {
+    return <Navigate to="/" replace />;
+  }
   return children;
 }
+
 
 function App() {
   const [token, setToken] = useState(localStorage.getItem("adminToken"));

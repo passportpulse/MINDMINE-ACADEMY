@@ -4,26 +4,26 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
 // ---------------- Register Admin ----------------
-// exports.registerAdmin = async (req, res) => {
-//   const { email, password } = req.body;
+exports.registerAdmin = async (req, res) => {
+  const { email, password } = req.body;
 
-//   if (!email || !password) {
-//     return res.status(400).json({ message: "Email and password required" });
-//   }
+  if (!email || !password) {
+    return res.status(400).json({ message: "Email and password required" });
+  }
 
-//   try {
-//     const existing = await Admin.findOne({ email });
-//     if (existing)
-//       return res.status(400).json({ message: "Admin already exists" });
+  try {
+    const existing = await Admin.findOne({ email });
+    if (existing)
+      return res.status(400).json({ message: "Admin already exists" });
 
-//     const admin = await Admin.create({ email, password });
+    const admin = await Admin.create({ email, password });
 
-//     res.status(201).json({ message: "Admin created", admin });
-//   } catch (err) {
-//     console.error("Register error:", err);
-//     res.status(500).json({ message: "Server error" });
-//   }
-// };
+    res.status(201).json({ message: "Admin created", admin });
+  } catch (err) {
+    console.error("Register error:", err);
+    res.status(500).json({ message: "Server error" });
+  }
+};
 
 // ---------------- Login Admin ----------------
 exports.loginAdmin = async (req, res) => {
