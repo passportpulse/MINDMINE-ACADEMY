@@ -10,23 +10,22 @@
 .hero-top {
   position: relative;
   height: 400px;
-  background-size: cover;
-  background-position: center;
+  width: 100%;
   overflow: hidden;
-  margin-top: 0;
 }
 
-.overlay {
-  position: absolute;
-  inset: 0;
-  background: rgba(0, 0, 50, 0.5);
+.hero-images {
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  color: white;
-  text-align: center;
-  padding: 1rem 2rem;
+  height: 100%;
+  width: 100%;
+  gap:0.1rem;
+}
+
+.hero-images img {
+  flex: 1;
+  height: 100%;
+  width: 50%;
+  object-fit: cover;   /* fills each half nicely */
 }
 
 .overlay h1 {

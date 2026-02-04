@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import "../../styles/campus/hero.css";
-import campus1 from "../../assets/moulali.png";
-import campus2 from "../../assets/joka.png";
-import campus3 from "../../assets/bagnan.png";
+import campus1 from "../../assets/campus1.png";
+import campus2 from "../../assets/campus2.png";
+// import campus3 from "../../assets/bagnan.png";
 
 const campuses = [
   {
@@ -54,10 +54,12 @@ export default function CampusSection() {
   return (
     <section className="campus-section">
       {/* Hero Section */}
-      <div
-        className="hero-top"
-        style={{ backgroundImage: `url(${selected.image})` }}
-      >
+      <div className="hero-top">
+        <div className="hero-images">
+          <img src={campus1} alt="Campus view 1" />
+          <img src={campus2} alt="Campus view 2" />
+        </div>
+
         <div className="overlay">
           <h1>Our Campuses</h1>
           <p>
