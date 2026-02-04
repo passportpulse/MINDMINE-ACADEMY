@@ -19,7 +19,6 @@ exports.createEnquiry = async (req, res) => {
   const { name, email, phone, course, lastQualification, message } = req.body;
 
   const missingFields = [];
-
   if (!name) missingFields.push("name");
   if (!email) missingFields.push("email");
   if (!phone) missingFields.push("phone");
@@ -32,12 +31,11 @@ exports.createEnquiry = async (req, res) => {
       success: false,
       message: "Missing required fields",
       missingFields,
-      received: req.body,
     });
   }
 
   try {
-    // 1️⃣ Save enquiry to DB
+    // 1️⃣ Save enquiry
     const enquiry = await Enquiry.create({
       name,
       email,
@@ -47,72 +45,69 @@ exports.createEnquiry = async (req, res) => {
       message,
     });
 
-    // 2️⃣ Send emails in background
-    setImmediate(async () => {
-      try {
-        const transporter = nodemailer.createTransport({
-          host: "smtp.gmail.com",
-          port: 465,
-          secure: true, // IMPORTANT (true for 465)
-          auth: {
-            user: process.env.SMTP_USER,
-            pass: process.env.SMTP_PASS,
-          },
-        });
-        await transporter.verify();
-        console.log("SMTP connected successfully on Render");
-
-        await transporter.verify();
-        console.log("SMTP READY");
-
-        // 📩 Mail to admin
-        await transporter.sendMail({
-          from: `"${name}" <${email}>`,
-          to: process.env.CONTACT_EMAIL,
-          subject: `New Enquiry: ${course}`,
-          html: `
-            <h3>📩 New Enquiry Received</h3>
-            <p><strong>Name:</strong> ${name}</p>
-            <p><strong>Email:</strong> ${email}</p>
-            <p><strong>Phone:</strong> ${phone}</p>
-            <p><strong>Last Qualification:</strong> ${lastQualification}</p>
-            <p><strong>Course:</strong> ${course}</p>
-            <hr/>
-            <p><strong>Message:</strong></p>
-            <p>${message}</p>
-          `,
-        });
-
-        // 📩 Auto reply to user
-        await transporter.sendMail({
-          from: `"Mindmine Academy" <${process.env.CONTACT_EMAIL}>`,
-          to: email,
-          subject: "Mindmine Academy – Enquiry Received",
-          html: `
-            <p>Hello ${name},</p>
-            <p>Thank you for contacting <strong>Mindmine Academy</strong>.</p>
-            <p>We received your enquiry regarding "<strong>${course}</strong>".</p>
-            <p>Our team will get back to you shortly.</p>
-            <br/>
-            <p>Regards,<br/>Mindmine Academy Team</p>
-          `,
-        });
-
-        console.log("Emails sent successfully for enquiry:", enquiry._id);
-      } catch (emailErr) {
-        console.error("Email sending failed:", emailErr);
-      }
+    // 2️⃣ Create transporter (Render-safe)
+    const transporter = nodemailer.createTransport({
+      host: "smtp.gmail.com",
+      port: 465,
+      secure: true,
+      auth: {
+        user: process.env.SMTP_USER,
+        pass: process.env.SMTP_PASS,
+      },
+      tls: {
+        rejectUnauthorized: false,
+      },
     });
 
-    // 3️⃣ Respond immediately
+    await transporter.verify();
+    console.log("SMTP connected on Render");
+
+    // 3️⃣ Mail to admin
+    await transporter.sendMail({
+      from: `"${name}" <${process.env.SMTP_USER}>`,
+      to: process.env.CONTACT_EMAIL,
+      subject: `New Enquiry: ${course}`,
+      html: `
+        <h3>📩 New Enquiry Received</h3>
+        <p><strong>Name:</strong> ${name}</p>
+        <p><strong>Email:</strong> ${email}</p>
+        <p><strong>Phone:</strong> ${phone}</p>
+        <p><strong>Last Qualification:</strong> ${lastQualification}</p>
+        <p><strong>Course:</strong> ${course}</p>
+        <hr/>
+        <p><strong>Message:</strong></p>
+        <p>${message}</p>
+      `,
+    });
+
+    // 4️⃣ Auto-reply to user
+    await transporter.sendMail({
+      from: `"Mindmine Academy" <${process.env.SMTP_USER}>`,
+      to: email,
+      subject: "Mindmine Academy – Enquiry Received",
+      html: `
+        <p>Hello ${name},</p>
+        <p>Thank you for contacting <strong>Mindmine Academy</strong>.</p>
+        <p>We received your enquiry regarding <strong>${course}</strong>.</p>
+        <p>Our team will contact you shortly.</p>
+        <br/>
+        <p>Regards,<br/>Mindmine Academy Team</p>
+      `,
+    });
+
+    console.log("Emails sent successfully:", enquiry._id);
+
+    // 5️⃣ Respond
     res.status(201).json({
       success: true,
-      message: "Enquiry submitted! Emails are being sent.",
+      message: "Enquiry submitted successfully",
     });
   } catch (err) {
-    console.error("Enquiry creation error:", err);
-    res
-      .status(500)
-      .json({ success: false, message: "Failed to submit enquiry" });
+    console.error("Enquiry error:", err);
+    res.status(500).json({
+      success: false,
+      message: "Failed to submit enquiry",
+    });
   }
 };
+
