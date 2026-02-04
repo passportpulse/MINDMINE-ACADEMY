@@ -1,50 +1,18 @@
 import React, { useState } from "react";
 import "../styles/form.css";
 
+const API = "https://mindmine-backend.onrender.com";
+
 export default function ApplyForm() {
   const statesAndUTs = [
-    // States
-    "Andhra Pradesh",
-    "Arunachal Pradesh",
-    "Assam",
-    "Bihar",
-    "Chhattisgarh",
-    "Goa",
-    "Gujarat",
-    "Haryana",
-    "Himachal Pradesh",
-    "Jharkhand",
-    "Karnataka",
-    "Kerala",
-    "Madhya Pradesh",
-    "Maharashtra",
-    "Manipur",
-    "Meghalaya",
-    "Mizoram",
-    "Nagaland",
-    "Odisha",
-    "Punjab",
-    "Rajasthan",
-    "Sikkim",
-    "Tamil Nadu",
-    "Telangana",
-    "Tripura",
-    "Uttar Pradesh",
-    "Uttarakhand",
-    "West Bengal",
-
-    // Union Territories
-    "Andaman and Nicobar Islands",
-    "Chandigarh",
-    "Dadra and Nagar Haveli and Daman & Diu",
-    "Delhi",
-    "Jammu and Kashmir",
-    "Ladakh",
-    "Lakshadweep",
-    "Puducherry",
+    "Andhra Pradesh","Arunachal Pradesh","Assam","Bihar","Chhattisgarh","Goa",
+    "Gujarat","Haryana","Himachal Pradesh","Jharkhand","Karnataka","Kerala",
+    "Madhya Pradesh","Maharashtra","Manipur","Meghalaya","Mizoram","Nagaland",
+    "Odisha","Punjab","Rajasthan","Sikkim","Tamil Nadu","Telangana","Tripura",
+    "Uttar Pradesh","Uttarakhand","West Bengal","Andaman and Nicobar Islands",
+    "Chandigarh","Delhi","Jammu and Kashmir","Ladakh","Lakshadweep","Puducherry"
   ];
 
-  // ---------------------- STATE ----------------------
   const [formData, setFormData] = useState({
     campus: "",
     campusLocation: "",
@@ -56,6 +24,7 @@ export default function ApplyForm() {
     aadhaar: "",
     address: "",
     city: "",
+    state: "",
     pin: "",
     phone: "",
     email: "",
@@ -68,7 +37,6 @@ export default function ApplyForm() {
     guardianName: "",
     guardianRelation: "",
     guardianPhone: "",
-    // Academic Info
     lastQualification: "",
     passingYear: "",
     previousCourse: "",
@@ -76,315 +44,172 @@ export default function ApplyForm() {
     percentage: "",
   });
 
-  const [step, setStep] = useState(1); // Step 1: Personal & Family, Step 2: Academic
+  const [step, setStep] = useState(1);
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [trackingId, setTrackingId] = useState("");
   const [error, setError] = useState("");
 
-  // ---------------------- HANDLERS ----------------------
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  // ---------------- VALIDATION ----------------
+
+  const validateStep1 = () => {
+    if (!/^\d{12}$/.test(formData.aadhaar))
+      return "Aadhaar must be exactly 12 digits";
+
+    if (!/^\d{10}$/.test(formData.phone))
+      return "Student phone must be 10 digits";
+
+    if (formData.fatherPhone && !/^\d{10}$/.test(formData.fatherPhone))
+      return "Father phone must be 10 digits";
+
+    if (formData.motherPhone && !/^\d{10}$/.test(formData.motherPhone))
+      return "Mother phone must be 10 digits";
+
+    if (formData.guardianPhone && !/^\d{10}$/.test(formData.guardianPhone))
+      return "Guardian phone must be 10 digits";
+
+    return "";
+  };
+
   const handleNext = () => {
-    // Simple validation for step 1
-    const requiredFields = ["course", "fullName", "phone", "email"];
-    for (let field of requiredFields) {
-      if (!formData[field]) {
-        setError("Please fill all required fields before proceeding.");
+    const required = ["course", "fullName", "phone", "email"];
+
+    for (let f of required) {
+      if (!formData[f]) {
+        setError("Please fill all required fields (*)");
         return;
       }
     }
+
+    const err = validateStep1();
+    if (err) {
+      setError(err);
+      return;
+    }
+
     setError("");
     setStep(2);
   };
 
-  const handleBack = () => {
-    setStep(1);
-  };
+  const handleBack = () => setStep(1);
+
+  // ---------------- SUBMIT ----------------
 
   const handleSubmit = async (e) => {
-    console.log(formData);
     e.preventDefault();
     setError("");
 
-    // Validate academic info
-    if (!formData.lastQualification || !formData.passingYear) {
-      setError("Please fill all required academic fields.");
+    const year = Number(formData.passingYear);
+    const currentYear = new Date().getFullYear();
+
+    if (!year || year > currentYear) {
+      setError("Passing year must be valid and not in the future");
+      return;
+    }
+
+    const percent = Number(formData.percentage);
+    if (percent < 0 || percent > 100) {
+      setError("Percentage must be between 0 and 100");
       return;
     }
 
     setLoading(true);
 
     try {
-      const res = await fetch(
-        "https://mindmine-backend.onrender.com/api/application",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(formData),
-        },
-      );
+      const res = await fetch(`${API}/api/application`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
 
       const data = await res.json();
 
-      if (!res.ok) throw new Error(data.message || "Submission failed");
+      if (!res.ok) throw new Error(data.message);
 
       setTrackingId(data.trackingId);
       setSubmitted(true);
     } catch (err) {
-      setError(err.message || "Submission failed. Please try again.");
+      setError(err.message || "Submission failed");
     } finally {
       setLoading(false);
     }
   };
 
-  // ---------------------- SUCCESS PAGE ----------------------
+  // ---------------- SUCCESS ----------------
+
   if (submitted) {
     return (
       <div className="apply-form-container">
         <div className="apply-form-card success-box">
-          <h2>🎉 Application Submitted Successfully!</h2>
-          <p>Thank you for applying to Mindmine Academy.</p>
-
-          <div className="tracking-box">
-            <strong>Your Tracking ID:</strong>
-            <span>{trackingId}</span>
-          </div>
-
-          <p>A confirmation email has been sent 📩</p>
-          <p>
-            <strong>
-              Check your inbox or spam folder for our confirmation email.
-            </strong>
-          </p>
+          <h2>🎉 Application Submitted Successfully</h2>
+          <p>Your Tracking ID:</p>
+          <strong>{trackingId}</strong>
         </div>
       </div>
     );
   }
 
-  // ---------------------- FORM ----------------------
+  // ---------------- FORM ----------------
+
+  const input = (name, placeholder, props = {}) => (
+    <input
+      name={name}
+      value={formData[name]}
+      onChange={handleChange}
+      placeholder={placeholder}
+      {...props}
+    />
+  );
+
   return (
     <div className="apply-form-container">
       <div className="apply-form-card">
-        <div className="form-header">
-          <h1>Student Enrollment Form</h1>
-          <p className="form-info">
-            Step {step}:{" "}
-            {step === 1 ? "Personal & Family Info" : "Academic Info"} | Session:
-            2025-26
-          </p>
-        </div>
+        <h1>Student Enrollment Form</h1>
 
         <form onSubmit={handleSubmit}>
           {step === 1 && (
             <>
-              <h2>Campus & Course Info</h2>
+              <h2>Student Info</h2>
               <div className="grid-2">
-                <input
-                  name="campus"
-                  placeholder="Campus"
-                  onChange={handleChange}
-                />
-                <input
-                  name="campusLocation"
-                  placeholder="Campus Location"
-                  onChange={handleChange}
-                />
-                <input
-                  className="full-width"
-                  name="course"
-                  placeholder="Course Applied For *"
-                  onChange={handleChange}
-                />
+                {input("fullName", "Full Name *")}
+                {input("course", "Course *")}
+                {input("aadhaar", "Aadhaar", { maxLength: 12, inputMode: "numeric" })}
+                {input("phone", "Phone *", { maxLength: 10, inputMode: "numeric" })}
+                {input("email", "Email *", { type: "email" })}
               </div>
 
-              <h2>Student Details</h2>
+              <h2>Parents</h2>
               <div className="grid-2">
-                <input
-                  name="fullName"
-                  placeholder="Full Name *"
-                  onChange={handleChange}
-                />
-                <input
-                  type="date"
-                  name="dob"
-                  max={new Date().toISOString().split("T")[0]} // today’s date
-                  onChange={handleChange}
-                />
-
-                <select name="gender" onChange={handleChange}>
-                  <option value="">Gender</option>
-                  <option>Male</option>
-                  <option>Female</option>
-                  <option>Other</option>
-                </select>
-
-                <select name="caste" onChange={handleChange}>
-                  <option value="">Caste</option>
-                  <option>GEN</option>
-                  <option>SC</option>
-                  <option>ST</option>
-                  <option>OBC</option>
-                </select>
-
-                <input
-                  name="aadhaar"
-                  placeholder="Aadhaar No"
-                  onChange={handleChange}
-                />
-                <input value="Indian" disabled />
-                <textarea
-                  className="full-width"
-                  name="address"
-                  placeholder="Full Address"
-                  onChange={handleChange}
-                />
-                <input name="city" placeholder="City" onChange={handleChange} />
-
-                <select
-                  name="state"
-                  value={formData.state}
-                  onChange={handleChange}
-                >
-                  <option value="">Select State</option>
-                  {statesAndUTs.map((s) => (
-                    <option key={s} value={s}>
-                      {s}
-                    </option>
-                  ))}
-                </select>
-                <input
-                  name="pin"
-                  placeholder="Pin Code"
-                  onChange={handleChange}
-                />
-
-                <input
-                  name="pin"
-                  placeholder="Pin Code"
-                  onChange={handleChange}
-                />
-                <input
-                  name="phone"
-                  placeholder="Contact No *"
-                  onChange={handleChange}
-                />
-                <input
-                  name="email"
-                  type="email"
-                  placeholder="Email *"
-                  onChange={handleChange}
-                />
+                {input("fatherPhone", "Father Phone", { maxLength: 10 })}
+                {input("motherPhone", "Mother Phone", { maxLength: 10 })}
+                {input("guardianPhone", "Guardian Phone", { maxLength: 10 })}
               </div>
 
-              <h2>Father's Info</h2>
-              <div className="grid-2">
-                <input
-                  name="fatherName"
-                  placeholder="Father Name"
-                  onChange={handleChange}
-                />
-                <input
-                  name="fatherOccupation"
-                  placeholder="Occupation"
-                  onChange={handleChange}
-                />
-                <input
-                  name="fatherPhone"
-                  placeholder="Phone"
-                  onChange={handleChange}
-                />
-              </div>
-
-              <h2>Mother's Info</h2>
-              <div className="grid-2">
-                <input
-                  name="motherName"
-                  placeholder="Mother Name"
-                  onChange={handleChange}
-                />
-                <input
-                  name="motherOccupation"
-                  placeholder="Occupation"
-                  onChange={handleChange}
-                />
-                <input
-                  name="motherPhone"
-                  placeholder="Phone"
-                  onChange={handleChange}
-                />
-              </div>
-
-              <h2>Local Guardian</h2>
-              <div className="grid-3">
-                <input
-                  name="guardianName"
-                  placeholder="Name"
-                  onChange={handleChange}
-                />
-                <input
-                  name="guardianRelation"
-                  placeholder="Relation"
-                  onChange={handleChange}
-                />
-                <input
-                  name="guardianPhone"
-                  placeholder="Phone"
-                  onChange={handleChange}
-                />
-              </div>
-
-              <div className="form-buttons">
-                <button
-                  type="button"
-                  className="submit-btn"
-                  onClick={handleNext}
-                >
-                  Next: Academic Info
-                </button>
-              </div>
+              <button type="button" onClick={handleNext}>
+                Next →
+              </button>
             </>
           )}
 
           {step === 2 && (
             <>
-              <h2>Academic Information</h2>
+              <h2>Academic Info</h2>
               <div className="grid-2">
-                <input
-                  name="lastQualification"
-                  placeholder="Last Qualification *"
-                  onChange={handleChange}
-                />
-                <input
-                  name="passingYear"
-                  placeholder="Year of Passing *"
-                  onChange={handleChange}
-                />
-                <input
-                  name="previousCourse"
-                  placeholder="Previous Course"
-                  onChange={handleChange}
-                />
-                <input
-                  name="previousInstitute"
-                  placeholder="Previous Institute"
-                  onChange={handleChange}
-                />
-                <input
-                  name="percentage"
-                  placeholder="Percentage / GPA"
-                  onChange={handleChange}
-                />
+                {input("lastQualification", "Last Qualification *")}
+                {input("passingYear", "Passing Year *", { type: "number" })}
+                {input("percentage", "Percentage", { type: "number" })}
               </div>
 
               <div className="form-buttons">
-                <button type="button" className="apply-back-btn" onClick={handleBack}>
+                <button type="button" onClick={handleBack}>
                   ← Back
                 </button>
-                <button type="submit" className="apply-submit-btn" disabled={loading}>
-                  {loading ? "Submitting..." : "Submit Application"}
+                <button type="submit" disabled={loading}>
+                  {loading ? "Submitting..." : "Submit"}
                 </button>
               </div>
             </>
