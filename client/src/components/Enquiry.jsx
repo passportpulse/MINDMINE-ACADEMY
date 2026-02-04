@@ -102,7 +102,7 @@ export default function Enquiry() {
             <div className="success-box">
               <h2>Thank You!</h2>
               <p>Your enquiry has been sent successfully.</p>
-              <p>Check your inbox or spam folder for our confirmation email.</p>
+              <p><strong>Check your inbox or spam folder for our confirmation email.</strong></p>
             </div>
           )}
 
