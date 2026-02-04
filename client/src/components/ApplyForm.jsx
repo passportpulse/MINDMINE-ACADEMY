@@ -77,7 +77,7 @@ export default function ApplyForm() {
 
     try {
       const res = await fetch(
-        "https://mindmine-academy.onrender.com/api/application",
+        "https://mindmine-backend.onrender.com/api/application",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
