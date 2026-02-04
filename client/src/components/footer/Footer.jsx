@@ -1,6 +1,6 @@
 import "../../styles/footer.css";
 import { MapPin, Phone, Mail } from "lucide-react";
-import logo from "../../assets/logo-dark.svg";
+import logo from "../../assets/logo.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faFacebookF,

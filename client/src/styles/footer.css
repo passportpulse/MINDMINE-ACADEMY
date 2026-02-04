@@ -16,11 +16,6 @@
 .footer-logo {
   width: 36px;
   height: 36px;
-  object-fit: contain;
-  transform: rotate(5deg);
-  border-radius: 9px;
-  background-color: white;
-  padding: 6px;
 }
 
 .footer-socials {

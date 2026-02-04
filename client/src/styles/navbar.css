@@ -26,11 +26,6 @@
 .navbar-custom .brand-logo {
   width: 32px;
   height: 32px;
-  object-fit: contain;
-  transform: rotate(5deg);
-  border-radius: 9px;
-  background-color: rgb(12, 35, 64);
-  padding: 6px;
 }
 
 .navbar-custom .brand-text {
