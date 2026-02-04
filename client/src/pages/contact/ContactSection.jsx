@@ -1,13 +1,12 @@
 import React from "react";
 import { FaMapMarkerAlt, FaPhoneAlt, FaClock } from "react-icons/fa";
 import "../../styles/contact/contact.css";
-import Enquiry from "../../components/Enquiry"; 
+import Enquiry from "../../components/Enquiry";
 
 export default function ContactSection() {
   return (
     <section className="contact-section">
       <div className="container">
-
         {/* LEFT INFO */}
         <div className="contact-left">
           <div className="contact-card">
@@ -16,7 +15,8 @@ export default function ContactSection() {
             <p>
               Moulali Campus
               <br />
-              52A Indian Mirror Street, Taltala, Opp. G.D. Hospital Kolkata – 700013
+              52A Indian Mirror Street, Taltala, Opp. G.D. Hospital Kolkata –
+              700013
             </p>
           </div>
 
@@ -38,8 +38,6 @@ export default function ContactSection() {
             <p>
               Moulali & Joka Mon – Sat: 10:00 AM – 7:30 PM
               <br />
-              Bagnan Mon – Sat: 9:30 AM – 6:30 PM
-              <br />
               Sunday Closed
             </p>
           </div>
@@ -49,7 +47,6 @@ export default function ContactSection() {
         <div className="contact-right">
           <Enquiry />
         </div>
-
       </div>
     </section>
   );

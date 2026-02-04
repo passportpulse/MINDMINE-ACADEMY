@@ -14,15 +14,13 @@ const app = express();
 
 // ✅ middleware (ORDER MATTERS)
 app.use(cors({
-  origin: [
-    "https://www.mindmineacademy.com",
-    "https://admin.mindmineacademy.com"
-  ],
-  methods: ["GET", "POST", "PUT", "DELETE"],
-  credentials: true
+  origin: "*",
+  methods: ["GET","POST","PUT","DELETE","OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"]
 }));
 
-app.use(express.json());   // parse JSON body
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 // Serve uploads folder
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
@@ -42,6 +40,12 @@ connectDB();
 app.get("/", (req, res) => {
   res.send("MindMine API running...");
 });
+
+app.post("/test", (req, res) => {
+  console.log("TEST BODY:", req.body);
+  res.json(req.body);
+});
+
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {

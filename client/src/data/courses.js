@@ -2,6 +2,10 @@ import nursing from "../assets/nursing.jpeg";
 import phlebotomy from "../assets/phlebotomy.png";
 import assistant from "../assets/assistant.jpg";
 import labAssistant from "../assets/lab-assistant.png";
+import ot from "../assets/ot.jpg";
+import physiotherapy from "../assets/physiotherapy.png";
+import icu from "../assets/icu.png";
+import optometry from "../assets/optometry.jpeg";
 import nutrition from "../assets/nutrition.jpg";
 import culinary from "../assets/culinary.png";
 import cake from "../assets/cake.jpg";
@@ -75,7 +79,7 @@ const courses = [
       "Gain practical experience assisting in surgeries, handling OT instruments, sterilization, and patient prep.",
     modules: ["OT Protocols", "Instrument Handling", "Sterilization Techniques", "Patient Prep", "Post-Operative Care"],
     eligibility: "10+2 passed in any stream.",
-    image: assistant,
+    image: ot,
     category: "healthcare",
   },
   {
@@ -88,7 +92,7 @@ const courses = [
       "Training in basic physiotherapy techniques, exercise routines, patient monitoring, and documentation.",
     modules: ["Exercise Assistance", "Rehabilitation Techniques", "Patient Monitoring", "Equipment Handling", "Record Keeping"],
     eligibility: "10+2 passed in any stream.",
-    image: assistant,
+    image: physiotherapy,
     category: "healthcare",
   },
   {
@@ -101,7 +105,7 @@ const courses = [
       "Hands-on training in ICU protocols, patient monitoring, vital signs, and assisting healthcare staff.",
     modules: ["ICU Basics", "Patient Monitoring", "Critical Care Assistance", "Equipment Handling", "Safety Protocols"],
     eligibility: "10+2 passed (Science preferred).",
-    image: assistant,
+    image: icu,
     category: "healthcare",
   },
   {
@@ -114,7 +118,7 @@ const courses = [
       "Learn basic eye care, visual testing, lens preparation, and assisting in optometry procedures.",
     modules: ["Eye Examination", "Vision Testing", "Lens Handling", "Patient Assistance", "Record Maintenance"],
     eligibility: "10+2 passed in any stream.",
-    image: assistant,
+    image: optometry,
     category: "healthcare",
   },
 

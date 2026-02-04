@@ -62,15 +62,14 @@ export default function Enquiry() {
         "https://mindmine-academy.onrender.com/api/enquiry",
         {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(formData), 
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
         },
       );
 
-      let data = {};
-      try {
-        data = await res.json();
-      } catch(err) {console.log(err)}
+      const data = await res.json();
 
       if (!res.ok) {
         throw new Error(data.message || "Something went wrong");
@@ -87,12 +86,11 @@ export default function Enquiry() {
         course: "",
         message: "",
       });
+
       setShowOtherInput(false);
     } catch (err) {
-      console.log(err);
-      toast.error("Failed to send enquiry");
-    } finally {
-      setLoading(false);
+      console.error(err);
+      toast.error(err.message || "Failed to send enquiry");
     }
   };
 
