@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import "../styles/notice.css";
+import { toast } from "react-toastify";
 
 const API = "https://mindmine-backend.onrender.com";
 
@@ -23,6 +24,7 @@ export default function UploadNotice() {
         if (data.success) setNotices(data.notices);
       } catch (err) {
         console.error(err);
+        toast.error("Failed to load notices");
       }
     };
     fetchNotices();
@@ -33,7 +35,11 @@ export default function UploadNotice() {
   // ---------------------
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!title || !description) return alert("Please enter title and description");
+
+    if (!title || !description) {
+      toast.warning("Please enter title and description");
+      return;
+    }
 
     const payload = { title, description };
     const url = editingId
@@ -51,23 +57,24 @@ export default function UploadNotice() {
       });
 
       const data = await res.json();
+
       if (data.success) {
-        alert(`Notice ${editingId ? "updated" : "uploaded"} successfully`);
+        toast.success(`Notice ${editingId ? "updated" : "uploaded"} successfully`);
         setTitle("");
         setDescription("");
         setEditingId(null);
-        // Refresh notices
+
         const refreshed = await fetch(`${API}/api/notice/all`, {
           headers: { Authorization: "Bearer " + token },
         });
         const refreshedData = await refreshed.json();
         if (refreshedData.success) setNotices(refreshedData.notices);
       } else {
-        alert("Failed to save notice");
+        toast.error(data.message || "Failed to save notice");
       }
     } catch (err) {
       console.error(err);
-      alert("Error saving notice");
+      toast.error("Server error while saving notice");
     }
   };
 
@@ -76,17 +83,24 @@ export default function UploadNotice() {
   // ---------------------
   const handleDelete = async (id) => {
     if (!window.confirm("Are you sure you want to delete this notice?")) return;
+
     try {
       const res = await fetch(`${API}/api/notice/delete/${id}`, {
         method: "DELETE",
         headers: { Authorization: "Bearer " + token },
       });
+
       const data = await res.json();
-      if (data.success) setNotices(notices.filter((n) => n._id !== id));
-      else alert("Failed to delete notice");
+
+      if (data.success) {
+        setNotices(notices.filter((n) => n._id !== id));
+        toast.success("Notice deleted");
+      } else {
+        toast.error("Failed to delete notice");
+      }
     } catch (err) {
       console.error(err);
-      alert("Error deleting notice");
+      toast.error("Server error while deleting notice");
     }
   };
 
@@ -109,17 +123,18 @@ export default function UploadNotice() {
           placeholder="Title"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
-          required
         />
+
         <textarea
           placeholder="Description"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
-          required
           rows={5}
         />
 
-        <button type="submit">{editingId ? "Update" : "Upload"}</button>
+        <button type="submit">
+          {editingId ? "Update" : "Upload"}
+        </button>
       </form>
 
       <div className="previous-notices">
@@ -133,7 +148,10 @@ export default function UploadNotice() {
               <div className="notice-info">
                 <h3>{notice.title}</h3>
                 <p>{notice.description}</p>
-                <span>{new Date(notice.createdAt).toLocaleDateString()}</span>
+                <span>
+                  {new Date(notice.createdAt).toLocaleDateString()}
+                </span>
+
                 <div className="notice-actions">
                   <button onClick={() => handleEdit(notice)}>Edit</button>
                   <button onClick={() => handleDelete(notice._id)}>Delete</button>
