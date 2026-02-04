@@ -59,7 +59,7 @@ export default function Enquiry() {
 
     try {
       const res = await fetch(
-        "https://mindmine-academy.onrender.com/api/enquiry",
+        "https://mindmine-backend.onrender.com/api/enquiry",
         {
           method: "POST",
           headers: {
@@ -102,6 +102,7 @@ export default function Enquiry() {
             <div className="success-box">
               <h2>Thank You!</h2>
               <p>Your enquiry has been sent successfully.</p>
+              <p>Check your inbox or spam folder for our confirmation email.</p>
             </div>
           )}
 
