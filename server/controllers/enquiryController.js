@@ -1,4 +1,4 @@
-require('dotenv').config();
+require("dotenv").config();
 const Enquiry = require("../models/Enquiry");
 
 // Get all enquiries
@@ -29,29 +29,42 @@ exports.createEnquiry = async (req, res) => {
   if (!message) missingFields.push("message");
 
   if (missingFields.length > 0) {
-    return res.status(400).json({ success: false, message: "Missing fields", missingFields });
+    return res
+      .status(400)
+      .json({ success: false, message: "Missing fields", missingFields });
   }
 
   try {
     // 1️⃣ Save enquiry in DB
-    const enquiry = await Enquiry.create({ name, email, phone, course, lastQualification, message });
+    const enquiry = await Enquiry.create({
+      name,
+      email,
+      phone,
+      course,
+      lastQualification,
+      message,
+    });
 
     // 2️⃣ Email to admin
     await sgMail.send({
       to: process.env.SENDGRID_VERIFIED_SENDER,
-      from: process.env.SENDGRID_VERIFIED_SENDER,
+      from: {
+        email: process.env.SENDGRID_VERIFIED_SENDER,
+        name: "Mindmine Academy",
+      },
+      replyTo: email, // 👈 student email here
       subject: `New Enquiry: ${course}`,
       html: `
-        <h3>📩 New Enquiry Received</h3>
-        <p><strong>Name:</strong> ${name}</p>
-        <p><strong>Email:</strong> ${email}</p>
-        <p><strong>Phone:</strong> ${phone}</p>
-        <p><strong>Last Qualification:</strong> ${lastQualification}</p>
-        <p><strong>Course:</strong> ${course}</p>
-        <hr/>
-        <p><strong>Message:</strong></p>
-        <p>${message}</p>
-      `,
+    <h3>📩 New Enquiry Received</h3>
+    <p><strong>Name:</strong> ${name}</p>
+    <p><strong>Email:</strong> ${email}</p>
+    <p><strong>Phone:</strong> ${phone}</p>
+    <p><strong>Last Qualification:</strong> ${lastQualification}</p>
+    <p><strong>Course:</strong> ${course}</p>
+    <hr/>
+    <p><strong>Message:</strong></p>
+    <p>${message}</p>
+  `,
     });
 
     // 3️⃣ Auto-reply to user
@@ -69,11 +82,13 @@ exports.createEnquiry = async (req, res) => {
       `,
     });
 
-    res.status(201).json({ success: true, message: "Enquiry submitted successfully" });
-
+    res
+      .status(201)
+      .json({ success: true, message: "Enquiry submitted successfully" });
   } catch (err) {
     console.error("ENQUIRY ERROR:", err);
-    res.status(500).json({ success: false, message: err.message, stack: err.stack });
+    res
+      .status(500)
+      .json({ success: false, message: err.message, stack: err.stack });
   }
 };
-
