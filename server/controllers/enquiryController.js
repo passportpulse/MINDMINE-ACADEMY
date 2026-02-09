@@ -44,6 +44,12 @@ exports.createEnquiry = async (req, res) => {
       lastQualification,
       message,
     });
+    console.log(
+      "SENDGRID KEY LOADED:",
+      process.env.SENDGRID_API_KEY ? "YES" : "NO",
+    );
+    console.log("SENDER EMAIL:", process.env.SENDGRID_VERIFIED_SENDER);
+    console.log("STUDENT EMAIL:", email);
 
     // 2️⃣ Email to admin
     await sgMail.send({

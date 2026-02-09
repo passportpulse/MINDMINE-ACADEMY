@@ -4,7 +4,7 @@
 .home-hero-section
  {
   background: linear-gradient(to right, #ffffff, #faecf6);
-  padding: 4rem 0;
+  padding: 8rem 0 4rem 0;
   overflow: hidden;
   display: flex;
   flex-direction: column;

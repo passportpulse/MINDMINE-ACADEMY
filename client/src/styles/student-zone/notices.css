@@ -1,6 +1,6 @@
 /* Main section */
 .notices-section {
-  padding: 40px 20px;
+  padding: 80px 20px;
   max-width: 900px;
   margin-block:rem;
   margin: auto;
@@ -10,8 +10,8 @@
 .blackboard {
   /* background: linear-gradient(145deg, #081a33, #0d254a); */
   border-radius: 14px;
-  box-shadow: 0 0 25px rgba(0,0,0,0.6);
-  margin-block: 4rem;
+  box-shadow: 0 0 15px rgba(0,0,0,0.2);
+  margin-block: 8rem 4rem;
 }
 
 /* Heading */
